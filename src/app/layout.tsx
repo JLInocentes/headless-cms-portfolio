@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -37,9 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} antialiased`}
       >
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}+ </ThemeProvider>+{" "}
-        </AppRouterCacheProvider>
+        {children}
       </body>
     </html>
   );
