@@ -1,7 +1,15 @@
-import Navbar from "@/ui/Navbar";
+import { getProjects } from "@/lib/data";
+import Navbar from "@/ui/components/Navbar";
 
 export default function Home() {
+  
+  const projects = getProjects();
+
   return (
-    <Navbar />
+    <>
+      <Navbar />
+      <div>
+      </div>
+    </>
   );
 }
