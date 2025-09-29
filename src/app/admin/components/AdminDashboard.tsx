@@ -11,9 +11,11 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Category, Project } from "@/generated/prisma";
 import { User } from "better-auth";
-import { LogOut, Palette, Tag } from "lucide-react";
+import { Palette, Tag } from "lucide-react";
 import UserActions from "./UserActions";
-import AddProjectModal from "./AddProjectModal";
+import AddProjectModal from "./modals/AddProjectModal";
+import AddCategoryModal from "./modals/AddCategoryModal";
+import Image from "next/image";
 
 type AdminDashboardProps = {
   projects: (Project & { category: Category })[];
@@ -55,7 +57,7 @@ export default function AdminDashboard({
           </div>
         </div>
         <div className="flex flex-col gap-6">
-          <Button className="border">Add a Category</Button>
+          <AddCategoryModal />
           <AddProjectModal categories={categories}/>
         </div>
       </div>
@@ -79,7 +81,9 @@ export default function AdminDashboard({
                   .map((project) => (
                     <Card key={project.id}>
                       <CardHeader>
-                        <img
+                        <Image
+                          width={500}
+                          height={500}
                           src={project.image}
                           alt={project.title}
                           className="rounded-md mb-4 aspect-video object-cover"
