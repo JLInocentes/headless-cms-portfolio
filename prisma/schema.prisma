@@ -90,3 +90,23 @@ model User {
   @@unique([email])
   @@map("user")
 }
+
+model HomepageContent {
+  id           String   @id @default("main")
+
+  heroTitle    String
+  heroSubtitle String
+  heroImage    String
+  artistName   String
+
+  emailLink    String
+  instagramUrl String? 
+  facebookUrl  String? 
+  tiktokUrl    String? 
+
+  skills       String[]
+  experiences  String[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
