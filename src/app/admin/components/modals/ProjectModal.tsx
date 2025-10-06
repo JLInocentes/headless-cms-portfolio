@@ -29,6 +29,7 @@ import { ImagePlus } from "lucide-react";
 import { createProject, updateProject } from "@/lib/actions/project.actions"; 
 import { toast } from "sonner";
 import Image from "next/image";
+import { CLOUDINARY_UPLOAD_PRESET } from "@/lib/constants";
 
 type ProjectModalProps = {
   categories: Category[];
@@ -147,7 +148,7 @@ export default function ProjectModal({
                   setMediaUrl(result.info.secure_url);
                   setMediaType(result.info.resource_type);
                 }}
-                uploadPreset="cms-upload-preset"
+                uploadPreset={CLOUDINARY_UPLOAD_PRESET}
                 className="w-full"
               >
                 <div className="flex items-center justify-center gap-2 w-full h-24 border-2 border-dashed border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
