@@ -3,12 +3,12 @@ import { getAllCategories } from "@/lib/actions/categories.actions";
 import AdminDashboard from "./components/AdminDashboard";
 import Login from "@/ui/components/Login";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers"; 
+import { headers } from "next/headers";
 
 export default async function AdminPage() {
   const session = await auth.api.getSession({
-    headers: await headers()
-})
+    headers: await headers(),
+  });
 
   if (!session) {
     return (
@@ -21,5 +21,11 @@ export default async function AdminPage() {
   const projects = await getAllProjects();
   const categories = await getAllCategories();
 
-  return <AdminDashboard projects={projects} categories={categories} user={session.user}/>;
+  return (
+    <AdminDashboard
+      projects={projects}
+      categories={categories}
+      user={session.user}
+    />
+  );
 }

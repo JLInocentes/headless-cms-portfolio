@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +18,11 @@ import { Label } from "@/components/ui/label";
 import { createCategory } from "@/lib/actions/categories.actions";
 import { toast } from "sonner";
 
-export default function AddCategoryModal() {
+export default function CategoryModal({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -46,9 +50,8 @@ export default function AddCategoryModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Add New Category</Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px] bg-white text-black">
         <DialogHeader>
           <DialogTitle>Add New Category</DialogTitle>

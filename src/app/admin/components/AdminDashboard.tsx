@@ -1,21 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Category, Project } from "@/generated/prisma";
 import { User } from "better-auth";
 import { Palette, Tag } from "lucide-react";
 import UserActions from "./UserActions";
-import AddProjectModal from "./modals/AddProjectModal";
-import AddCategoryModal from "./modals/AddCategoryModal";
-import Image from "next/image";
+import ProjectModal from "./modals/ProjectModal";
+import CategoryModal from "./modals/CategoryModal";
+import ProjectCard from "./ProjectCard";
 
 type AdminDashboardProps = {
   projects: (Project & { category: Category })[];
@@ -29,8 +22,8 @@ export default function AdminDashboard({
   user,
 }: AdminDashboardProps) {
   return (
-    <div className="h-full px-8 text-white">
-      <div className="flex justify-between px-8 pt-8 items-center border-b">
+    <div className="h-full text-white">
+      <div className="flex justify-between px-8 pt-2 items-center border-b">
         <h1>Welcome, {user.name}</h1>
         <UserActions />
       </div>
@@ -57,17 +50,25 @@ export default function AdminDashboard({
           </div>
         </div>
         <div className="flex flex-col gap-6">
-          <AddCategoryModal />
-          <AddProjectModal categories={categories}/>
+          <CategoryModal>
+            <Button variant="outline">Add New Category</Button>
+          </CategoryModal>
+          <ProjectModal categories={categories}>
+            <Button variant="outline">Add Project</Button>
+          </ProjectModal>
         </div>
       </div>
 
-      <div>
+      <div className="px-8">
         <h2 className="text-2xl font-bold mb-4">Your Projects</h2>
         <Tabs defaultValue={categories[0]?.id.toString() ?? ""}>
           <TabsList>
             {categories.map((category) => (
-              <TabsTrigger key={category.id} value={category.id.toString()}>
+              <TabsTrigger
+                key={category.id}
+                value={category.id.toString()}
+                className="cursor-pointer hover:bg-slate-500"
+              >
                 {category.title}
               </TabsTrigger>
             ))}
@@ -79,26 +80,7 @@ export default function AdminDashboard({
                 {projects
                   .filter((project) => project.categoryId === category.id)
                   .map((project) => (
-                    <Card key={project.id}>
-                      <CardHeader>
-                        <Image
-                          width={500}
-                          height={500}
-                          src={project.image}
-                          alt={project.title}
-                          className="rounded-md mb-4 aspect-video object-cover"
-                        />
-                        <CardTitle>{project.title}</CardTitle>
-                        <CardDescription>
-                          {project.category.title}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-gray-700">
-                          {project.description}
-                        </p>
-                      </CardContent>
-                    </Card>
+                    <ProjectCard key={project.id} project={project} categories={categories} />
                   ))}
               </div>
             </TabsContent>
