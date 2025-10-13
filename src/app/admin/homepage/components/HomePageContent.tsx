@@ -60,6 +60,7 @@ export default function HomePageContentForm({ content }: HomePageContentProps) {
     const formData = {
       heroTitle,
       heroSubtitle,
+      heroImage,
       artistName,
       instagramUrl,
       facebookUrl,
